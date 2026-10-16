@@ -1,0 +1,12 @@
+# Build do Maven (cada projeto tem o próprio .gitignore, este cobre o resto)
+target/
+*.log
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Sistema operacional
+Thumbs.db
+.DS_Store

@@ -1,0 +1,6322 @@
+[
+  {
+    "numero": 1,
+    "slug": "biblioteca",
+    "nome": "Biblioteca",
+    "categoria": "Educação",
+    "descricao": "Controle de autores e livros de uma biblioteca.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Autor",
+        "tabela": "autores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "nacionalidade",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Livro",
+        "tabela": "livros",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoPublicacao",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "disponivel",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "autor",
+            "entidade": "Autor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 2,
+    "slug": "clinica-medica",
+    "nome": "Clínica Médica",
+    "categoria": "Saúde",
+    "descricao": "Agendamento de consultas entre médicos e pacientes de uma clínica.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Medico",
+        "tabela": "medicos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "crm",
+            "tipo": "String"
+          },
+          {
+            "nome": "especialidade",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Paciente",
+        "tabela": "pacientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Consulta",
+        "tabela": "consultas",
+        "campos": [
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "retorno",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "medico",
+            "entidade": "Medico"
+          },
+          {
+            "campo": "paciente",
+            "entidade": "Paciente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 3,
+    "slug": "loja-roupas",
+    "nome": "Loja de Roupas",
+    "categoria": "Comércio",
+    "descricao": "Cadastro de categorias e peças de roupa com preço e estoque.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Categoria",
+        "tabela": "categorias",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativa",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Roupa",
+        "tabela": "roupas",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "tamanho",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "Categoria"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 4,
+    "slug": "escola",
+    "nome": "Escola",
+    "categoria": "Educação",
+    "descricao": "Gerenciamento de turmas e alunos matriculados em uma escola.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Turma",
+        "tabela": "turmas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoLetivo",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "turno",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Aluno",
+        "tabela": "alunos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "matricula",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "turma",
+            "entidade": "Turma"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 5,
+    "slug": "farmacia",
+    "nome": "Farmácia",
+    "categoria": "Saúde",
+    "descricao": "Controle de fabricantes e medicamentos de uma farmácia.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Fabricante",
+        "tabela": "fabricantes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cnpj",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Medicamento",
+        "tabela": "medicamentos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "controlado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fabricante",
+            "entidade": "Fabricante"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 6,
+    "slug": "petshop",
+    "nome": "Petshop",
+    "categoria": "Comércio",
+    "descricao": "Cadastro de tutores, animais e serviços de banho e tosa.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Tutor",
+        "tabela": "tutores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Animal",
+        "tabela": "animais",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "especie",
+            "tipo": "String"
+          },
+          {
+            "nome": "peso",
+            "tipo": "Double"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "tutor",
+            "entidade": "Tutor"
+          }
+        ]
+      },
+      {
+        "nome": "Atendimento",
+        "tabela": "atendimentos",
+        "campos": [
+          {
+            "nome": "servico",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "animal",
+            "entidade": "Animal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 7,
+    "slug": "cursos-online",
+    "nome": "Cursos Online",
+    "categoria": "Educação",
+    "descricao": "Plataforma simples de instrutores, cursos e seus módulos.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Instrutor",
+        "tabela": "instrutores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Curso",
+        "tabela": "cursos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "cargaHoraria",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "instrutor",
+            "entidade": "Instrutor"
+          }
+        ]
+      },
+      {
+        "nome": "Modulo",
+        "tabela": "modulos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "curso",
+            "entidade": "Curso"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 8,
+    "slug": "livraria",
+    "nome": "Livraria",
+    "categoria": "Comércio",
+    "descricao": "Controle de editoras e livros à venda em uma livraria.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Editora",
+        "tabela": "editoras",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cidade",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Livro",
+        "tabela": "livros",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "isbn",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "editora",
+            "entidade": "Editora"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 9,
+    "slug": "academia",
+    "nome": "Academia",
+    "categoria": "Saúde",
+    "descricao": "Gestão de planos e alunos de uma academia de ginástica.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Plano",
+        "tabela": "planos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "duracaoMeses",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Aluno",
+        "tabela": "alunos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataInicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "plano",
+            "entidade": "Plano"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 10,
+    "slug": "autoescola",
+    "nome": "Autoescola",
+    "categoria": "Educação",
+    "descricao": "Agendamento de aulas práticas com instrutores e veículos.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Instrutor",
+        "tabela": "instrutores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "categoriaHabilitacao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoFabricacao",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Aula",
+        "tabela": "aulas",
+        "campos": [
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "realizada",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "instrutor",
+            "entidade": "Instrutor"
+          },
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 11,
+    "slug": "laboratorio-exames",
+    "nome": "Laboratório de Exames",
+    "categoria": "Saúde",
+    "descricao": "Registro de tipos de exame, pacientes e coletas realizadas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "TipoExame",
+        "tabela": "tipos_exame",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "jejum",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Paciente",
+        "tabela": "pacientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cpf",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Exame",
+        "tabela": "exames",
+        "campos": [
+          {
+            "nome": "dataColeta",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "resultadoLiberado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "tipoExame",
+            "entidade": "TipoExame"
+          },
+          {
+            "campo": "paciente",
+            "entidade": "Paciente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 12,
+    "slug": "otica",
+    "nome": "Ótica",
+    "categoria": "Comércio",
+    "descricao": "Cadastro de marcas e armações de óculos disponíveis na loja.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Marca",
+        "tabela": "marcas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "pais",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Armacao",
+        "tabela": "armacoes",
+        "campos": [
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "cor",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "marca",
+            "entidade": "Marca"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 13,
+    "slug": "loja-games",
+    "nome": "Loja de Games",
+    "categoria": "Comércio",
+    "descricao": "Catálogo de plataformas e jogos novos e usados.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Plataforma",
+        "tabela": "plataformas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "fabricante",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Jogo",
+        "tabela": "jogos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "lancamento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "usado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "plataforma",
+            "entidade": "Plataforma"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 14,
+    "slug": "sebo",
+    "nome": "Sebo",
+    "categoria": "Comércio",
+    "descricao": "Controle de gêneros e exemplares de livros usados.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Genero",
+        "tabela": "generos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Exemplar",
+        "tabela": "exemplares",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "autor",
+            "tipo": "String"
+          },
+          {
+            "nome": "conservacao",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "genero",
+            "entidade": "Genero"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 15,
+    "slug": "creche",
+    "nome": "Creche",
+    "categoria": "Educação",
+    "descricao": "Cadastro de responsáveis e crianças atendidas pela creche.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Responsavel",
+        "tabela": "responsaveis",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Crianca",
+        "tabela": "criancas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "periodoIntegral",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "responsavel",
+            "entidade": "Responsavel"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 16,
+    "slug": "hospital",
+    "nome": "Hospital",
+    "categoria": "Saúde",
+    "descricao": "Controle de alas, leitos e internações de um hospital.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Ala",
+        "tabela": "alas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "andar",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Leito",
+        "tabela": "leitos",
+        "campos": [
+          {
+            "nome": "numero",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "ocupado",
+            "tipo": "Boolean"
+          },
+          {
+            "nome": "diaria",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "ala",
+            "entidade": "Ala"
+          }
+        ]
+      },
+      {
+        "nome": "Internacao",
+        "tabela": "internacoes",
+        "campos": [
+          {
+            "nome": "paciente",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "dataAlta",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "leito",
+            "entidade": "Leito"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 17,
+    "slug": "nutricionista",
+    "nome": "Nutricionista",
+    "categoria": "Saúde",
+    "descricao": "Acompanhamento de pacientes e avaliações nutricionais.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Paciente",
+        "tabela": "pacientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "objetivo",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Avaliacao",
+        "tabela": "avaliacoes",
+        "campos": [
+          {
+            "nome": "dataAvaliacao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "pesoKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "alturaM",
+            "tipo": "Double"
+          },
+          {
+            "nome": "observacoes",
+            "tipo": "String"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "paciente",
+            "entidade": "Paciente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 18,
+    "slug": "dentista",
+    "nome": "Consultório Odontológico",
+    "categoria": "Saúde",
+    "descricao": "Registro de dentistas e procedimentos realizados no consultório.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Dentista",
+        "tabela": "dentistas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cro",
+            "tipo": "String"
+          },
+          {
+            "nome": "especialidade",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Procedimento",
+        "tabela": "procedimentos",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "paciente",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "concluido",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "dentista",
+            "entidade": "Dentista"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 19,
+    "slug": "mercearia",
+    "nome": "Mercearia",
+    "categoria": "Comércio",
+    "descricao": "Controle de fornecedores e produtos de uma mercearia de bairro.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Fornecedor",
+        "tabela": "fornecedores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Produto",
+        "tabela": "produtos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "validade",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fornecedor",
+            "entidade": "Fornecedor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 20,
+    "slug": "papelaria",
+    "nome": "Papelaria",
+    "categoria": "Comércio",
+    "descricao": "Controle de categorias, produtos e vendas de uma papelaria.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Categoria",
+        "tabela": "categorias",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Produto",
+        "tabela": "produtos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "marca",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "Categoria"
+          }
+        ]
+      },
+      {
+        "nome": "Venda",
+        "tabela": "vendas",
+        "campos": [
+          {
+            "nome": "dataVenda",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "produto",
+            "entidade": "Produto"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 21,
+    "slug": "escola-idiomas",
+    "nome": "Escola de Idiomas",
+    "categoria": "Educação",
+    "descricao": "Organização de idiomas, professores e turmas de uma escola de línguas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Idioma",
+        "tabela": "idiomas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "nivelMaximo",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Professor",
+        "tabela": "professores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Turma",
+        "tabela": "turmas",
+        "campos": [
+          {
+            "nome": "horario",
+            "tipo": "String"
+          },
+          {
+            "nome": "vagas",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "idioma",
+            "entidade": "Idioma"
+          },
+          {
+            "campo": "professor",
+            "entidade": "Professor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 22,
+    "slug": "faculdade",
+    "nome": "Faculdade",
+    "categoria": "Educação",
+    "descricao": "Cadastro de cursos superiores e suas disciplinas.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Curso",
+        "tabela": "cursos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "duracaoSemestres",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Disciplina",
+        "tabela": "disciplinas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cargaHoraria",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "obrigatoria",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "curso",
+            "entidade": "Curso"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 23,
+    "slug": "clinica-veterinaria",
+    "nome": "Clínica Veterinária",
+    "categoria": "Saúde",
+    "descricao": "Controle de animais atendidos e suas vacinas aplicadas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Animal",
+        "tabela": "animais",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "especie",
+            "tipo": "String"
+          },
+          {
+            "nome": "peso",
+            "tipo": "Double"
+          }
+        ]
+      },
+      {
+        "nome": "Vacina",
+        "tabela": "vacinas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAplicacao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "proximaDose",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "animal",
+            "entidade": "Animal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 24,
+    "slug": "fisioterapia",
+    "nome": "Clínica de Fisioterapia",
+    "categoria": "Saúde",
+    "descricao": "Agendamento de sessões de fisioterapia com fisioterapeutas.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Fisioterapeuta",
+        "tabela": "fisioterapeutas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "crefito",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Sessao",
+        "tabela": "sessoes",
+        "campos": [
+          {
+            "nome": "paciente",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fisioterapeuta",
+            "entidade": "Fisioterapeuta"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 25,
+    "slug": "floricultura",
+    "nome": "Floricultura",
+    "categoria": "Comércio",
+    "descricao": "Registro de clientes e encomendas de arranjos de flores.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Encomenda",
+        "tabela": "encomendas",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataEntrega",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "entregue",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 26,
+    "slug": "oficina-mecanica",
+    "nome": "Oficina Mecânica",
+    "categoria": "Serviços",
+    "descricao": "Controle de veículos e ordens de serviço de uma oficina mecânica.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoFabricacao",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "cor",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "OrdemServico",
+        "tabela": "ordens_servico",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "concluida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 27,
+    "slug": "salao-beleza",
+    "nome": "Salão de Beleza",
+    "categoria": "Serviços",
+    "descricao": "Agendamento de atendimentos, clientes e procedimentos de um salão de beleza.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataCadastro",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Procedimento",
+        "tabela": "procedimentos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Atendimento",
+        "tabela": "atendimentos",
+        "campos": [
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "observacao",
+            "tipo": "String"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          },
+          {
+            "campo": "procedimento",
+            "entidade": "Procedimento"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 28,
+    "slug": "controle-estoque",
+    "nome": "Controle de Estoque",
+    "categoria": "Gestão",
+    "descricao": "Cadastro de produtos por categoria e registro das movimentações de estoque.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "CategoriaProduto",
+        "tabela": "categorias_produto",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Produto",
+        "tabela": "produtos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "codigo",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "precoCusto",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "CategoriaProduto"
+          }
+        ]
+      },
+      {
+        "nome": "Movimentacao",
+        "tabela": "movimentacoes",
+        "campos": [
+          {
+            "nome": "tipo",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "produto",
+            "entidade": "Produto"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 29,
+    "slug": "contas-a-pagar",
+    "nome": "Contas a Pagar",
+    "categoria": "Finanças",
+    "descricao": "Controle de fornecedores e das contas a pagar com seus vencimentos.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Fornecedor",
+        "tabela": "fornecedores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cnpj",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "ContaPagar",
+        "tabela": "contas_pagar",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "vencimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "paga",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fornecedor",
+            "entidade": "Fornecedor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 30,
+    "slug": "lavanderia",
+    "nome": "Lavanderia",
+    "categoria": "Serviços",
+    "descricao": "Registro de clientes e pedidos de lavagem de roupas de uma lavanderia.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "PedidoLavagem",
+        "tabela": "pedidos_lavagem",
+        "campos": [
+          {
+            "nome": "quantidadePecas",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataRetirada",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "entregue",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 31,
+    "slug": "recursos-humanos",
+    "nome": "Recursos Humanos",
+    "categoria": "Gestão",
+    "descricao": "Cadastro de departamentos e funcionários de uma empresa.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Departamento",
+        "tabela": "departamentos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "localizacao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Funcionario",
+        "tabela": "funcionarios",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cargo",
+            "tipo": "String"
+          },
+          {
+            "nome": "salario",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataAdmissao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "departamento",
+            "entidade": "Departamento"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 32,
+    "slug": "orcamento-domestico",
+    "nome": "Orçamento Doméstico",
+    "categoria": "Finanças",
+    "descricao": "Lançamento de receitas e despesas da casa organizados por categoria de gasto.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "CategoriaGasto",
+        "tabela": "categorias_gasto",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "limiteMensal",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Lancamento",
+        "tabela": "lancamentos",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataLancamento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "receita",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "CategoriaGasto"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 33,
+    "slug": "chaveiro",
+    "nome": "Chaveiro",
+    "categoria": "Serviços",
+    "descricao": "Controle de clientes e chamados de atendimento de um chaveiro.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "endereco",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "ChamadoChaveiro",
+        "tabela": "chamados_chaveiro",
+        "campos": [
+          {
+            "nome": "tipoServico",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "urgente",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 34,
+    "slug": "gestao-projetos",
+    "nome": "Gestão de Projetos",
+    "categoria": "Gestão",
+    "descricao": "Acompanhamento de projetos, responsáveis e tarefas de uma equipe.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Projeto",
+        "tabela": "projetos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataInicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "orcamento",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Responsavel",
+        "tabela": "responsaveis",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Tarefa",
+        "tabela": "tarefas",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "prioridade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "prazo",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "concluida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "projeto",
+            "entidade": "Projeto"
+          },
+          {
+            "campo": "responsavel",
+            "entidade": "Responsavel"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 35,
+    "slug": "cofrinho-metas",
+    "nome": "Cofrinho de Metas",
+    "categoria": "Finanças",
+    "descricao": "Definição de metas de economia e registro dos depósitos feitos em cada uma.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Meta",
+        "tabela": "metas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorAlvo",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "prazo",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "alcancada",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Deposito",
+        "tabela": "depositos",
+        "campos": [
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataDeposito",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "observacao",
+            "tipo": "String"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "meta",
+            "entidade": "Meta"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 36,
+    "slug": "assistencia-tecnica",
+    "nome": "Assistência Técnica",
+    "categoria": "Serviços",
+    "descricao": "Controle de clientes, aparelhos e reparos de uma assistência técnica.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Aparelho",
+        "tabela": "aparelhos",
+        "campos": [
+          {
+            "nome": "tipo",
+            "tipo": "String"
+          },
+          {
+            "nome": "marca",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "numeroSerie",
+            "tipo": "String"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      },
+      {
+        "nome": "Reparo",
+        "tabela": "reparos",
+        "campos": [
+          {
+            "nome": "defeito",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorOrcado",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "consertado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "aparelho",
+            "entidade": "Aparelho"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 37,
+    "slug": "reserva-salas",
+    "nome": "Reserva de Salas",
+    "categoria": "Gestão",
+    "descricao": "Cadastro de salas de reunião e das reservas feitas em cada uma.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Sala",
+        "tabela": "salas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "capacidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "andar",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "possuiProjetor",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Reserva",
+        "tabela": "reservas",
+        "campos": [
+          {
+            "nome": "responsavel",
+            "tipo": "String"
+          },
+          {
+            "nome": "assunto",
+            "tipo": "String"
+          },
+          {
+            "nome": "inicio",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "fim",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "sala",
+            "entidade": "Sala"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 38,
+    "slug": "cartoes-credito",
+    "nome": "Cartões de Crédito",
+    "categoria": "Finanças",
+    "descricao": "Controle de cartões de crédito, faturas e compras realizadas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Cartao",
+        "tabela": "cartoes",
+        "campos": [
+          {
+            "nome": "bandeira",
+            "tipo": "String"
+          },
+          {
+            "nome": "titular",
+            "tipo": "String"
+          },
+          {
+            "nome": "limite",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "diaVencimento",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Fatura",
+        "tabela": "faturas",
+        "campos": [
+          {
+            "nome": "competencia",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "vencimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "paga",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cartao",
+            "entidade": "Cartao"
+          }
+        ]
+      },
+      {
+        "nome": "Compra",
+        "tabela": "compras",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataCompra",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fatura",
+            "entidade": "Fatura"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 39,
+    "slug": "lava-rapido",
+    "nome": "Lava-Rápido",
+    "categoria": "Serviços",
+    "descricao": "Registro de veículos e lavagens realizadas em um lava-rápido.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "cor",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Lavagem",
+        "tabela": "lavagens",
+        "campos": [
+          {
+            "nome": "tipoLavagem",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "comCera",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 40,
+    "slug": "frota-veiculos",
+    "nome": "Frota de Veículos",
+    "categoria": "Gestão",
+    "descricao": "Gerenciamento da frota de uma empresa com manutenções e abastecimentos.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoFabricacao",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "quilometragem",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Manutencao",
+        "tabela": "manutencoes",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "custo",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataManutencao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "preventiva",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      },
+      {
+        "nome": "Abastecimento",
+        "tabela": "abastecimentos",
+        "campos": [
+          {
+            "nome": "litros",
+            "tipo": "Double"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataAbastecimento",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 41,
+    "slug": "investimentos",
+    "nome": "Investimentos",
+    "categoria": "Finanças",
+    "descricao": "Organização de carteiras de investimento e dos ativos que as compõem.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Carteira",
+        "tabela": "carteiras",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "objetivo",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataCriacao",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Ativo",
+        "tabela": "ativos",
+        "campos": [
+          {
+            "nome": "ticker",
+            "tipo": "String"
+          },
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "precoMedio",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "carteira",
+            "entidade": "Carteira"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 42,
+    "slug": "encanador",
+    "nome": "Encanador",
+    "categoria": "Serviços",
+    "descricao": "Agenda de clientes e visitas técnicas de um serviço de encanamento.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "endereco",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "VisitaTecnica",
+        "tabela": "visitas_tecnicas",
+        "campos": [
+          {
+            "nome": "descricaoProblema",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorMaoDeObra",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataVisita",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "resolvida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 43,
+    "slug": "patrimonio",
+    "nome": "Controle de Patrimônio",
+    "categoria": "Gestão",
+    "descricao": "Cadastro de setores e dos bens patrimoniais de cada setor.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Setor",
+        "tabela": "setores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "responsavel",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Bem",
+        "tabela": "bens",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "numeroTombo",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorAquisicao",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataAquisicao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "emUso",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "setor",
+            "entidade": "Setor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 44,
+    "slug": "emprestimos",
+    "nome": "Empréstimos",
+    "categoria": "Finanças",
+    "descricao": "Controle de empréstimos e das parcelas a receber de cada um.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Emprestimo",
+        "tabela": "emprestimos",
+        "campos": [
+          {
+            "nome": "beneficiario",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "taxaJuros",
+            "tipo": "Double"
+          },
+          {
+            "nome": "dataContrato",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Parcela",
+        "tabela": "parcelas",
+        "campos": [
+          {
+            "nome": "numero",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "vencimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "paga",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "emprestimo",
+            "entidade": "Emprestimo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 45,
+    "slug": "controle-contratos",
+    "nome": "Controle de Contratos",
+    "categoria": "Gestão",
+    "descricao": "Gestão de empresas contratadas, contratos vigentes e seus aditivos.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Empresa",
+        "tabela": "empresas",
+        "campos": [
+          {
+            "nome": "razaoSocial",
+            "tipo": "String"
+          },
+          {
+            "nome": "cnpj",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Contrato",
+        "tabela": "contratos",
+        "campos": [
+          {
+            "nome": "objeto",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorMensal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataInicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "dataFim",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "vigente",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "empresa",
+            "entidade": "Empresa"
+          }
+        ]
+      },
+      {
+        "nome": "Aditivo",
+        "tabela": "aditivos",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorAdicional",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataAssinatura",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "contrato",
+            "entidade": "Contrato"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 46,
+    "slug": "dedetizadora",
+    "nome": "Dedetizadora",
+    "categoria": "Serviços",
+    "descricao": "Registro de clientes e aplicações de controle de pragas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "endereco",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Aplicacao",
+        "tabela": "aplicacoes",
+        "campos": [
+          {
+            "nome": "praga",
+            "tipo": "String"
+          },
+          {
+            "nome": "produto",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataAplicacao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "garantiaMeses",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 47,
+    "slug": "fornecedores",
+    "nome": "Fornecedores",
+    "categoria": "Gestão",
+    "descricao": "Cadastro de fornecedores por categoria e das cotações de preço recebidas.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "CategoriaFornecedor",
+        "tabela": "categorias_fornecedor",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Fornecedor",
+        "tabela": "fornecedores",
+        "campos": [
+          {
+            "nome": "razaoSocial",
+            "tipo": "String"
+          },
+          {
+            "nome": "cnpj",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "CategoriaFornecedor"
+          }
+        ]
+      },
+      {
+        "nome": "Cotacao",
+        "tabela": "cotacoes",
+        "campos": [
+          {
+            "nome": "produto",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "dataCotacao",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fornecedor",
+            "entidade": "Fornecedor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 48,
+    "slug": "caixa-diario",
+    "nome": "Caixa Diário",
+    "categoria": "Finanças",
+    "descricao": "Abertura de caixas e registro das entradas e saídas do dia.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Caixa",
+        "tabela": "caixas",
+        "campos": [
+          {
+            "nome": "operador",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAbertura",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "saldoInicial",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "aberto",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "MovimentoCaixa",
+        "tabela": "movimentos_caixa",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "entrada",
+            "tipo": "Boolean"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "caixa",
+            "entidade": "Caixa"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 49,
+    "slug": "contas-bancarias",
+    "nome": "Contas Bancárias",
+    "categoria": "Finanças",
+    "descricao": "Controle de bancos, contas bancárias e suas transações.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Banco",
+        "tabela": "bancos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "codigo",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "ContaBancaria",
+        "tabela": "contas_bancarias",
+        "campos": [
+          {
+            "nome": "agencia",
+            "tipo": "String"
+          },
+          {
+            "nome": "numero",
+            "tipo": "String"
+          },
+          {
+            "nome": "titular",
+            "tipo": "String"
+          },
+          {
+            "nome": "saldo",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "banco",
+            "entidade": "Banco"
+          }
+        ]
+      },
+      {
+        "nome": "Transacao",
+        "tabela": "transacoes",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataTransacao",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "credito",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "conta",
+            "entidade": "ContaBancaria"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 50,
+    "slug": "jardinagem",
+    "nome": "Jardinagem",
+    "categoria": "Serviços",
+    "descricao": "Controle de clientes e serviços de jardinagem prestados.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "endereco",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "ServicoJardim",
+        "tabela": "servicos_jardim",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "areaM2",
+            "tipo": "Double"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataServico",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "recorrente",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 51,
+    "slug": "cinema",
+    "nome": "Cinema",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Controle de filmes em cartaz e das sessões de um cinema.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Filme",
+        "tabela": "filmes",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "genero",
+            "tipo": "String"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "classificacao",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Sessao",
+        "tabela": "sessoes",
+        "campos": [
+          {
+            "nome": "horario",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "sala",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "legendado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "filme",
+            "entidade": "Filme"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 52,
+    "slug": "teatro",
+    "nome": "Teatro",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Cadastro de peças teatrais e de suas apresentações.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Peca",
+        "tabela": "pecas",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "diretor",
+            "tipo": "String"
+          },
+          {
+            "nome": "duracaoMinutos",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Apresentacao",
+        "tabela": "apresentacoes",
+        "campos": [
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "precoIngresso",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "lugaresDisponiveis",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "peca",
+            "entidade": "Peca"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 53,
+    "slug": "museu",
+    "nome": "Museu",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Gerenciamento de exposições e das visitas recebidas por um museu.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Exposicao",
+        "tabela": "exposicoes",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "tema",
+            "tipo": "String"
+          },
+          {
+            "nome": "inicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "fim",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Visita",
+        "tabela": "visitas",
+        "campos": [
+          {
+            "nome": "visitante",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataVisita",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "quantidadePessoas",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "exposicao",
+            "entidade": "Exposicao"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 54,
+    "slug": "clube-leitura",
+    "nome": "Clube de Leitura",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Acompanhamento dos livros lidos pelos membros de um clube de leitura.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Livro",
+        "tabela": "livros",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "autor",
+            "tipo": "String"
+          },
+          {
+            "nome": "paginas",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Membro",
+        "tabela": "membros",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Leitura",
+        "tabela": "leituras",
+        "campos": [
+          {
+            "nome": "dataInicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "paginasLidas",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "concluida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "livro",
+            "entidade": "Livro"
+          },
+          {
+            "campo": "membro",
+            "entidade": "Membro"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 55,
+    "slug": "locadora-jogos",
+    "nome": "Locadora de Jogos",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Locação de jogos de videogame para clientes cadastrados.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Jogo",
+        "tabela": "jogos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "plataforma",
+            "tipo": "String"
+          },
+          {
+            "nome": "valorDiaria",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "disponivel",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Locacao",
+        "tabela": "locacoes",
+        "campos": [
+          {
+            "nome": "dataLocacao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "dataDevolucao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "jogo",
+            "entidade": "Jogo"
+          },
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 56,
+    "slug": "campeonato",
+    "nome": "Campeonato de Futebol",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Cadastro de times e jogadores de um campeonato de futebol amador.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Time",
+        "tabela": "times",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cidade",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoFundacao",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Jogador",
+        "tabela": "jogadores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "posicao",
+            "tipo": "String"
+          },
+          {
+            "nome": "numeroCamisa",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "gols",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "equipe",
+            "entidade": "Time"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 57,
+    "slug": "playlist",
+    "nome": "Playlist de Músicas",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Organização de artistas e músicas favoritas em uma playlist.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Artista",
+        "tabela": "artistas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "paisOrigem",
+            "tipo": "String"
+          },
+          {
+            "nome": "generoMusical",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Musica",
+        "tabela": "musicas",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "duracaoSegundos",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "anoLancamento",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "favorita",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "artista",
+            "entidade": "Artista"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 58,
+    "slug": "colecao-filmes",
+    "nome": "Coleção de Filmes",
+    "categoria": "Lazer e Cultura",
+    "descricao": "Catálogo pessoal de filmes organizados por diretor.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Diretor",
+        "tabela": "diretores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "nacionalidade",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoNascimento",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Filme",
+        "tabela": "filmes",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoLancamento",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "nota",
+            "tipo": "Double"
+          },
+          {
+            "nome": "assistido",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "diretor",
+            "entidade": "Diretor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 59,
+    "slug": "restaurante",
+    "nome": "Restaurante",
+    "categoria": "Alimentação",
+    "descricao": "Controle de mesas e dos pedidos feitos em um restaurante.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Mesa",
+        "tabela": "mesas",
+        "campos": [
+          {
+            "nome": "numero",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "capacidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "ocupada",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Pedido",
+        "tabela": "pedidos",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "pago",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "mesa",
+            "entidade": "Mesa"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 60,
+    "slug": "pizzaria",
+    "nome": "Pizzaria",
+    "categoria": "Alimentação",
+    "descricao": "Registro de clientes, sabores de pizza e pedidos de uma pizzaria.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "endereco",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Pizza",
+        "tabela": "pizzas",
+        "campos": [
+          {
+            "nome": "sabor",
+            "tipo": "String"
+          },
+          {
+            "nome": "tamanho",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Pedido",
+        "tabela": "pedidos",
+        "campos": [
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "dataPedido",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "entregue",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          },
+          {
+            "campo": "pizza",
+            "entidade": "Pizza"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 61,
+    "slug": "lanchonete",
+    "nome": "Lanchonete",
+    "categoria": "Alimentação",
+    "descricao": "Cardápio de lanches organizado por categorias.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Categoria",
+        "tabela": "categorias",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Lanche",
+        "tabela": "lanches",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "calorias",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "disponivel",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "Categoria"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 62,
+    "slug": "cafeteria",
+    "nome": "Cafeteria",
+    "categoria": "Alimentação",
+    "descricao": "Controle de fornecedores e lotes de grãos de café de uma cafeteria.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Fornecedor",
+        "tabela": "fornecedores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cidade",
+            "tipo": "String"
+          },
+          {
+            "nome": "contato",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "GraoCafe",
+        "tabela": "graos_cafe",
+        "campos": [
+          {
+            "nome": "variedade",
+            "tipo": "String"
+          },
+          {
+            "nome": "origem",
+            "tipo": "String"
+          },
+          {
+            "nome": "precoKg",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoqueKg",
+            "tipo": "Double"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "fornecedor",
+            "entidade": "Fornecedor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 63,
+    "slug": "padaria",
+    "nome": "Padaria",
+    "categoria": "Alimentação",
+    "descricao": "Registro dos padeiros e das fornadas produzidas por dia.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Padeiro",
+        "tabela": "padeiros",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "turno",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAdmissao",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Fornada",
+        "tabela": "fornadas",
+        "campos": [
+          {
+            "nome": "produto",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "precoUnitario",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "padeiro",
+            "entidade": "Padeiro"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 64,
+    "slug": "delivery",
+    "nome": "Delivery de Comida",
+    "categoria": "Alimentação",
+    "descricao": "Entregas de restaurantes parceiros realizadas por entregadores.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Restaurante",
+        "tabela": "restaurantes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "tipoCozinha",
+            "tipo": "String"
+          },
+          {
+            "nome": "taxaEntrega",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "aberto",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Entregador",
+        "tabela": "entregadores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "veiculo",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Entrega",
+        "tabela": "entregas",
+        "campos": [
+          {
+            "nome": "enderecoDestino",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "entregue",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "restaurante",
+            "entidade": "Restaurante"
+          },
+          {
+            "campo": "entregador",
+            "entidade": "Entregador"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 65,
+    "slug": "receitas",
+    "nome": "Livro de Receitas",
+    "categoria": "Alimentação",
+    "descricao": "Cadastro de receitas culinárias e de seus ingredientes.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Receita",
+        "tabela": "receitas",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "modoPreparo",
+            "tipo": "String"
+          },
+          {
+            "nome": "tempoPreparoMinutos",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "porcoes",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Ingrediente",
+        "tabela": "ingredientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Double"
+          },
+          {
+            "nome": "unidade",
+            "tipo": "String"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "receita",
+            "entidade": "Receita"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 66,
+    "slug": "adega",
+    "nome": "Adega de Vinhos",
+    "categoria": "Alimentação",
+    "descricao": "Controle de vinícolas e dos vinhos guardados em uma adega.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Vinicola",
+        "tabela": "vinicolas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "pais",
+            "tipo": "String"
+          },
+          {
+            "nome": "regiao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Vinho",
+        "tabela": "vinhos",
+        "campos": [
+          {
+            "nome": "rotulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "safra",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "teorAlcoolico",
+            "tipo": "Double"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoque",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "vinicola",
+            "entidade": "Vinicola"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 67,
+    "slug": "helpdesk",
+    "nome": "Helpdesk",
+    "categoria": "Tecnologia",
+    "descricao": "Abertura e acompanhamento de chamados de suporte técnico.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Solicitante",
+        "tabela": "solicitantes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "setor",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Chamado",
+        "tabela": "chamados",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "prioridade",
+            "tipo": "String"
+          },
+          {
+            "nome": "abertoEm",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "resolvido",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "solicitante",
+            "entidade": "Solicitante"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 68,
+    "slug": "inventario-ti",
+    "nome": "Inventário de Equipamentos de TI",
+    "categoria": "Tecnologia",
+    "descricao": "Controle dos equipamentos de informática distribuídos entre os setores da empresa.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Setor",
+        "tabela": "setores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "responsavel",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Equipamento",
+        "tabela": "equipamentos",
+        "campos": [
+          {
+            "nome": "patrimonio",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "tipo",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAquisicao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "setor",
+            "entidade": "Setor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 69,
+    "slug": "bugs",
+    "nome": "Controle de Bugs",
+    "categoria": "Tecnologia",
+    "descricao": "Registro de projetos de software e dos bugs encontrados em cada um.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Projeto",
+        "tabela": "projetos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "repositorio",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Bug",
+        "tabela": "bugs",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "severidade",
+            "tipo": "String"
+          },
+          {
+            "nome": "situacao",
+            "tipo": "String"
+          },
+          {
+            "nome": "registradoEm",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "projeto",
+            "entidade": "Projeto"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 70,
+    "slug": "blog",
+    "nome": "Blog",
+    "categoria": "Tecnologia",
+    "descricao": "Publicação de posts por autores, com comentários dos leitores.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Autor",
+        "tabela": "autores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "biografia",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Post",
+        "tabela": "posts",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "conteudo",
+            "tipo": "String"
+          },
+          {
+            "nome": "publicadoEm",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "visualizacoes",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "publicado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "autor",
+            "entidade": "Autor"
+          }
+        ]
+      },
+      {
+        "nome": "Comentario",
+        "tabela": "comentarios",
+        "campos": [
+          {
+            "nome": "nomeLeitor",
+            "tipo": "String"
+          },
+          {
+            "nome": "conteudo",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "post",
+            "entidade": "Post"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 71,
+    "slug": "encurtador-links",
+    "nome": "Encurtador de Links",
+    "categoria": "Tecnologia",
+    "descricao": "Criação de links curtos por usuário, com contagem de cliques.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Usuario",
+        "tabela": "usuarios",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "LinkCurto",
+        "tabela": "links_curtos",
+        "campos": [
+          {
+            "nome": "urlOriginal",
+            "tipo": "String"
+          },
+          {
+            "nome": "codigo",
+            "tipo": "String"
+          },
+          {
+            "nome": "cliques",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "expiraEm",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "usuario",
+            "entidade": "Usuario"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 72,
+    "slug": "licencas-software",
+    "nome": "Licenças de Software",
+    "categoria": "Tecnologia",
+    "descricao": "Controle das licenças adquiridas para cada software da empresa.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Software",
+        "tabela": "softwares",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "fabricante",
+            "tipo": "String"
+          },
+          {
+            "nome": "versao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Licenca",
+        "tabela": "licencas",
+        "campos": [
+          {
+            "nome": "chaveLicenca",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidadeUsuarios",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "validade",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "custo",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "software",
+            "entidade": "Software"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 73,
+    "slug": "servidores",
+    "nome": "Servidores e Aplicações",
+    "categoria": "Tecnologia",
+    "descricao": "Cadastro de servidores e das aplicações hospedadas em cada um.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Servidor",
+        "tabela": "servidores",
+        "campos": [
+          {
+            "nome": "hostname",
+            "tipo": "String"
+          },
+          {
+            "nome": "enderecoIp",
+            "tipo": "String"
+          },
+          {
+            "nome": "sistemaOperacional",
+            "tipo": "String"
+          },
+          {
+            "nome": "memoriaGb",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Aplicacao",
+        "tabela": "aplicacoes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "versao",
+            "tipo": "String"
+          },
+          {
+            "nome": "porta",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "emExecucao",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "servidor",
+            "entidade": "Servidor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 74,
+    "slug": "api-keys",
+    "nome": "Chaves de API",
+    "categoria": "Tecnologia",
+    "descricao": "Emissão de chaves de API por cliente e registro do consumo de cada chave.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "plano",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "ApiKey",
+        "tabela": "api_keys",
+        "campos": [
+          {
+            "nome": "chave",
+            "tipo": "String"
+          },
+          {
+            "nome": "criadaEm",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "expiraEm",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "ativa",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      },
+      {
+        "nome": "Consumo",
+        "tabela": "consumos",
+        "campos": [
+          {
+            "nome": "endpoint",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "dataConsumo",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "apiKey",
+            "entidade": "ApiKey"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 75,
+    "slug": "forum",
+    "nome": "Fórum de Discussão",
+    "categoria": "Tecnologia",
+    "descricao": "Fórum com membros, tópicos de discussão e respostas.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Membro",
+        "tabela": "membros",
+        "campos": [
+          {
+            "nome": "apelido",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataCadastro",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Topico",
+        "tabela": "topicos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "criadoEm",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "fechado",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "autor",
+            "entidade": "Membro"
+          }
+        ]
+      },
+      {
+        "nome": "Resposta",
+        "tabela": "respostas",
+        "campos": [
+          {
+            "nome": "conteudo",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "topico",
+            "entidade": "Topico"
+          },
+          {
+            "campo": "autor",
+            "entidade": "Membro"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 76,
+    "slug": "igreja",
+    "nome": "Igreja",
+    "categoria": "Comunidade",
+    "descricao": "Cadastro de células e membros de uma igreja.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Celula",
+        "tabela": "celulas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "bairro",
+            "tipo": "String"
+          },
+          {
+            "nome": "diaReuniao",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativa",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Membro",
+        "tabela": "membros",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataBatismo",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "contribuicaoMensal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "celula",
+            "entidade": "Celula"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 77,
+    "slug": "condominio",
+    "nome": "Condomínio",
+    "categoria": "Comunidade",
+    "descricao": "Controle de apartamentos e moradores de um condomínio residencial.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Apartamento",
+        "tabela": "apartamentos",
+        "campos": [
+          {
+            "nome": "numero",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "bloco",
+            "tipo": "String"
+          },
+          {
+            "nome": "areaM2",
+            "tipo": "Double"
+          },
+          {
+            "nome": "valorCondominio",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Morador",
+        "tabela": "moradores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "proprietario",
+            "tipo": "Boolean"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "apartamento",
+            "entidade": "Apartamento"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 78,
+    "slug": "eventos",
+    "nome": "Eventos",
+    "categoria": "Comunidade",
+    "descricao": "Organização de eventos comunitários e das inscrições dos participantes.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Evento",
+        "tabela": "eventos",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "local",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataHora",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "capacidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valorIngresso",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Inscricao",
+        "tabela": "inscricoes",
+        "campos": [
+          {
+            "nome": "nomeParticipante",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataInscricao",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "pago",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "evento",
+            "entidade": "Evento"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 79,
+    "slug": "agenda-contatos",
+    "nome": "Agenda de Contatos",
+    "categoria": "Comunidade",
+    "descricao": "Agenda pessoal com contatos organizados por grupos.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Grupo",
+        "tabela": "grupos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Contato",
+        "tabela": "contatos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "aniversario",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "grupo",
+            "entidade": "Grupo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 80,
+    "slug": "ong",
+    "nome": "ONG",
+    "categoria": "Comunidade",
+    "descricao": "Gestão das ações sociais de uma ONG e dos voluntários participantes.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Acao",
+        "tabela": "acoes",
+        "campos": [
+          {
+            "nome": "titulo",
+            "tipo": "String"
+          },
+          {
+            "nome": "local",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAcao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "vagas",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Voluntario",
+        "tabela": "voluntarios",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "horasDedicadas",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "acao",
+            "entidade": "Acao"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 81,
+    "slug": "cooperativa",
+    "nome": "Cooperativa",
+    "categoria": "Comunidade",
+    "descricao": "Controle de cooperados e das contribuições mensais da cooperativa.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Cooperado",
+        "tabela": "cooperados",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cpf",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataAdmissao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "capitalSocial",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Contribuicao",
+        "tabela": "contribuicoes",
+        "campos": [
+          {
+            "nome": "competencia",
+            "tipo": "String"
+          },
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataPagamento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "paga",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "cooperado",
+            "entidade": "Cooperado"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 82,
+    "slug": "associacao-bairro",
+    "nome": "Associação de Bairro",
+    "categoria": "Comunidade",
+    "descricao": "Cadastro de ruas e associados de uma associação de moradores.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Rua",
+        "tabela": "ruas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cep",
+            "tipo": "String"
+          },
+          {
+            "nome": "extensaoKm",
+            "tipo": "Double"
+          }
+        ]
+      },
+      {
+        "nome": "Associado",
+        "tabela": "associados",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "numeroCasa",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "adimplente",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "rua",
+            "entidade": "Rua"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 83,
+    "slug": "clube-social",
+    "nome": "Clube Social",
+    "categoria": "Comunidade",
+    "descricao": "Gerenciamento de modalidades esportivas e sócios de um clube.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Modalidade",
+        "tabela": "modalidades",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "mensalidade",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "vagas",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Socio",
+        "tabela": "socios",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "modalidade",
+            "entidade": "Modalidade"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 84,
+    "slug": "brecho-solidario",
+    "nome": "Brechó Solidário",
+    "categoria": "Comunidade",
+    "descricao": "Controle de peças doadas e vendidas em um brechó beneficente.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Categoria",
+        "tabela": "categorias",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Peca",
+        "tabela": "pecas",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "tamanho",
+            "tipo": "String"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "vendida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "categoria",
+            "entidade": "Categoria"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 85,
+    "slug": "campanha-doacoes",
+    "nome": "Campanha de Doações",
+    "categoria": "Comunidade",
+    "descricao": "Acompanhamento de campanhas de arrecadação, doadores e doações recebidas.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Campanha",
+        "tabela": "campanhas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "metaValor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataInicio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "dataFim",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "ativa",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Doador",
+        "tabela": "doadores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Doacao",
+        "tabela": "doacoes",
+        "campos": [
+          {
+            "nome": "valor",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataDoacao",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "anonima",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "campanha",
+            "entidade": "Campanha"
+          },
+          {
+            "campo": "doador",
+            "entidade": "Doador"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 86,
+    "slug": "fazenda",
+    "nome": "Fazenda",
+    "categoria": "Agro e Logística",
+    "descricao": "Controle de talhões e plantios de uma propriedade rural.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Talhao",
+        "tabela": "talhoes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "areaHectares",
+            "tipo": "Double"
+          },
+          {
+            "nome": "tipoSolo",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Plantio",
+        "tabela": "plantios",
+        "campos": [
+          {
+            "nome": "cultura",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataPlantio",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "dataColheitaPrevista",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "sacasEstimadas",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "talhao",
+            "entidade": "Talhao"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 87,
+    "slug": "rebanho",
+    "nome": "Rebanho",
+    "categoria": "Agro e Logística",
+    "descricao": "Gestão de lotes e animais de um rebanho bovino.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Lote",
+        "tabela": "lotes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "pasto",
+            "tipo": "String"
+          },
+          {
+            "nome": "capacidade",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Animal",
+        "tabela": "animais",
+        "campos": [
+          {
+            "nome": "brinco",
+            "tipo": "String"
+          },
+          {
+            "nome": "raca",
+            "tipo": "String"
+          },
+          {
+            "nome": "pesoKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "dataNascimento",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "lote",
+            "entidade": "Lote"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 88,
+    "slug": "hortifruti",
+    "nome": "Hortifruti",
+    "categoria": "Agro e Logística",
+    "descricao": "Cadastro de produtores e dos hortifrútis que eles fornecem.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Produtor",
+        "tabela": "produtores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cidade",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Produto",
+        "tabela": "produtos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "precoKg",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "estoqueKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "organico",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "produtor",
+            "entidade": "Produtor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 89,
+    "slug": "silo",
+    "nome": "Silo de Grãos",
+    "categoria": "Agro e Logística",
+    "descricao": "Controle de silos e das cargas de grãos armazenadas.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Silo",
+        "tabela": "silos",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "capacidadeToneladas",
+            "tipo": "Double"
+          },
+          {
+            "nome": "localizacao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Carga",
+        "tabela": "cargas",
+        "campos": [
+          {
+            "nome": "cultura",
+            "tipo": "String"
+          },
+          {
+            "nome": "pesoToneladas",
+            "tipo": "Double"
+          },
+          {
+            "nome": "umidade",
+            "tipo": "Double"
+          },
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDateTime"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "silo",
+            "entidade": "Silo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 90,
+    "slug": "transportadora",
+    "nome": "Transportadora",
+    "categoria": "Agro e Logística",
+    "descricao": "Gerenciamento de motoristas, veículos e entregas de uma transportadora.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Motorista",
+        "tabela": "motoristas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cnh",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "ativo",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "capacidadeKg",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Entrega",
+        "tabela": "entregas",
+        "campos": [
+          {
+            "nome": "destino",
+            "tipo": "String"
+          },
+          {
+            "nome": "pesoKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "valorFrete",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataPrevista",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "entregue",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "motorista",
+            "entidade": "Motorista"
+          },
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 91,
+    "slug": "frota-agricola",
+    "nome": "Frota Agrícola",
+    "categoria": "Agro e Logística",
+    "descricao": "Controle de máquinas agrícolas e de suas manutenções.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Maquina",
+        "tabela": "maquinas",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoFabricacao",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "horasUso",
+            "tipo": "Double"
+          }
+        ]
+      },
+      {
+        "nome": "Manutencao",
+        "tabela": "manutencoes",
+        "campos": [
+          {
+            "nome": "descricao",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataManutencao",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "custo",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "concluida",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "maquina",
+            "entidade": "Maquina"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 92,
+    "slug": "apicultura",
+    "nome": "Apicultura",
+    "categoria": "Agro e Logística",
+    "descricao": "Acompanhamento de apiários, colmeias e colheitas de mel.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Apiario",
+        "tabela": "apiarios",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "localizacao",
+            "tipo": "String"
+          },
+          {
+            "nome": "floracao",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Colmeia",
+        "tabela": "colmeias",
+        "campos": [
+          {
+            "nome": "codigo",
+            "tipo": "String"
+          },
+          {
+            "nome": "especie",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataInstalacao",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "apiario",
+            "entidade": "Apiario"
+          }
+        ]
+      },
+      {
+        "nome": "Colheita",
+        "tabela": "colheitas",
+        "campos": [
+          {
+            "nome": "quantidadeKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "dataColheita",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "valorEstimado",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "colmeia",
+            "entidade": "Colmeia"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 93,
+    "slug": "viveiro",
+    "nome": "Viveiro de Mudas",
+    "categoria": "Agro e Logística",
+    "descricao": "Cadastro de espécies e lotes de mudas de um viveiro.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Especie",
+        "tabela": "especies",
+        "campos": [
+          {
+            "nome": "nomeComum",
+            "tipo": "String"
+          },
+          {
+            "nome": "nomeCientifico",
+            "tipo": "String"
+          },
+          {
+            "nome": "cicloDias",
+            "tipo": "Integer"
+          }
+        ]
+      },
+      {
+        "nome": "Muda",
+        "tabela": "mudas",
+        "campos": [
+          {
+            "nome": "lote",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "precoUnitario",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataSemeadura",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "especie",
+            "entidade": "Especie"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 94,
+    "slug": "pesqueiro",
+    "nome": "Pesqueiro",
+    "categoria": "Agro e Logística",
+    "descricao": "Controle de tanques de peixes e das despescas realizadas.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Tanque",
+        "tabela": "tanques",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "volumeLitros",
+            "tipo": "Double"
+          },
+          {
+            "nome": "tipoPeixe",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Despesca",
+        "tabela": "despescas",
+        "campos": [
+          {
+            "nome": "pesoKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "quantidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "dataDespesca",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "tanque",
+            "entidade": "Tanque"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 95,
+    "slug": "coop-agricola",
+    "nome": "Cooperativa Agrícola",
+    "categoria": "Agro e Logística",
+    "descricao": "Registro de agricultores e dos recebimentos de produção da cooperativa.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Agricultor",
+        "tabela": "agricultores",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "cpf",
+            "tipo": "String"
+          },
+          {
+            "nome": "propriedade",
+            "tipo": "String"
+          },
+          {
+            "nome": "areaHectares",
+            "tipo": "Double"
+          }
+        ]
+      },
+      {
+        "nome": "Recebimento",
+        "tabela": "recebimentos",
+        "campos": [
+          {
+            "nome": "produto",
+            "tipo": "String"
+          },
+          {
+            "nome": "quantidadeKg",
+            "tipo": "Double"
+          },
+          {
+            "nome": "precoKg",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataRecebimento",
+            "tipo": "LocalDate"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "agricultor",
+            "entidade": "Agricultor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 96,
+    "slug": "hotel",
+    "nome": "Hotel",
+    "categoria": "Serviços",
+    "descricao": "Gestão de quartos, hóspedes e reservas de um hotel.",
+    "lombok": true,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Quarto",
+        "tabela": "quartos",
+        "campos": [
+          {
+            "nome": "numero",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "tipo",
+            "tipo": "String"
+          },
+          {
+            "nome": "diaria",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "disponivel",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Hospede",
+        "tabela": "hospedes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "documento",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Reserva",
+        "tabela": "reservas",
+        "campos": [
+          {
+            "nome": "dataEntrada",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "dataSaida",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "quarto",
+            "entidade": "Quarto"
+          },
+          {
+            "campo": "hospede",
+            "entidade": "Hospede"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 97,
+    "slug": "pousada",
+    "nome": "Pousada",
+    "categoria": "Serviços",
+    "descricao": "Controle de chalés e hospedagens de uma pousada.",
+    "lombok": false,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Chale",
+        "tabela": "chales",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "capacidade",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "diaria",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "cafeIncluso",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Hospedagem",
+        "tabela": "hospedagens",
+        "campos": [
+          {
+            "nome": "nomeHospede",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataChegada",
+            "tipo": "LocalDate"
+          },
+          {
+            "nome": "noites",
+            "tipo": "Integer"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "chale",
+            "entidade": "Chale"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 98,
+    "slug": "estacionamento",
+    "nome": "Estacionamento",
+    "categoria": "Serviços",
+    "descricao": "Controle de vagas e tickets de entrada e saída de um estacionamento.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Vaga",
+        "tabela": "vagas",
+        "campos": [
+          {
+            "nome": "codigo",
+            "tipo": "String"
+          },
+          {
+            "nome": "setor",
+            "tipo": "String"
+          },
+          {
+            "nome": "coberta",
+            "tipo": "Boolean"
+          }
+        ]
+      },
+      {
+        "nome": "Ticket",
+        "tabela": "tickets",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "entrada",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "saida",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "valorCobrado",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "vaga",
+            "entidade": "Vaga"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 99,
+    "slug": "agencia-viagens",
+    "nome": "Agência de Viagens",
+    "categoria": "Serviços",
+    "descricao": "Venda de pacotes turísticos para clientes de uma agência de viagens.",
+    "lombok": false,
+    "service": true,
+    "entidades": [
+      {
+        "nome": "Pacote",
+        "tabela": "pacotes",
+        "campos": [
+          {
+            "nome": "destino",
+            "tipo": "String"
+          },
+          {
+            "nome": "diasDuracao",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "preco",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "dataSaida",
+            "tipo": "LocalDate"
+          }
+        ]
+      },
+      {
+        "nome": "Cliente",
+        "tabela": "clientes",
+        "campos": [
+          {
+            "nome": "nome",
+            "tipo": "String"
+          },
+          {
+            "nome": "email",
+            "tipo": "String"
+          },
+          {
+            "nome": "telefone",
+            "tipo": "String"
+          }
+        ]
+      },
+      {
+        "nome": "Contratacao",
+        "tabela": "contratacoes",
+        "campos": [
+          {
+            "nome": "dataContratacao",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "passageiros",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "valorPago",
+            "tipo": "BigDecimal"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "pacote",
+            "entidade": "Pacote"
+          },
+          {
+            "campo": "cliente",
+            "entidade": "Cliente"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 100,
+    "slug": "locadora",
+    "nome": "Locadora de Veículos",
+    "categoria": "Serviços",
+    "descricao": "Controle da frota e das locações de uma locadora de veículos.",
+    "lombok": true,
+    "service": false,
+    "entidades": [
+      {
+        "nome": "Veiculo",
+        "tabela": "veiculos",
+        "campos": [
+          {
+            "nome": "placa",
+            "tipo": "String"
+          },
+          {
+            "nome": "modelo",
+            "tipo": "String"
+          },
+          {
+            "nome": "anoModelo",
+            "tipo": "Integer"
+          },
+          {
+            "nome": "diaria",
+            "tipo": "BigDecimal"
+          }
+        ]
+      },
+      {
+        "nome": "Locacao",
+        "tabela": "locacoes",
+        "campos": [
+          {
+            "nome": "cliente",
+            "tipo": "String"
+          },
+          {
+            "nome": "dataRetirada",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "dataDevolucao",
+            "tipo": "LocalDateTime"
+          },
+          {
+            "nome": "valorTotal",
+            "tipo": "BigDecimal"
+          },
+          {
+            "nome": "devolvido",
+            "tipo": "Boolean"
+          }
+        ],
+        "relacoes": [
+          {
+            "campo": "veiculo",
+            "entidade": "Veiculo"
+          }
+        ]
+      }
+    ]
+  }
+]

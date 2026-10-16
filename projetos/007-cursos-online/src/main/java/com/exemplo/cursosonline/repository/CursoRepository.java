@@ -1,0 +1,10 @@
+package com.exemplo.cursosonline.repository;
+
+import com.exemplo.cursosonline.model.Curso;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CursoRepository extends JpaRepository<Curso, Long> {
+
+    List<Curso> findByInstrutorId(Long instrutorId);
+}
