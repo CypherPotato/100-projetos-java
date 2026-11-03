@@ -84,7 +84,7 @@ talvez.ifPresent(a -> System.out.println(a));
 Optional<String> vazio = Optional.empty();
 ```
 
-`null` quer dizer "nenhum objeto"; chamar um método nele lança `NullPointerException`. `Optional<T>` é uma caixa que pode estar vazia e obriga quem recebe a tratar a ausência. Use-o como **retorno** de métodos (como `findById`), não como campo de entidade nem como parâmetro.
+`null` quer dizer "nenhum objeto"; chamar um método nele lança `NullPointerException`. `Optional<T>` é uma caixa que pode estar vazia e obriga quem recebe a tratar a ausência. Use-o como **retorno** de métodos (como `findById`), não como campo de entidade nem como parâmetro. A seção 8 detalha os métodos do `Optional`.
 
 ## 2. Classes e objetos
 
@@ -302,7 +302,7 @@ public class Pedido {
 }
 ```
 
-(`Produto` aqui é um `record`, explicado na seção 8.) Na dúvida, prefira composição. A herança acopla a subclasse à superclasse e só se justifica quando a relação "é um" é real e estável.
+(`Produto` aqui é um `record`, explicado na seção 9.) Na dúvida, prefira composição. A herança acopla a subclasse à superclasse e só se justifica quando a relação "é um" é real e estável.
 
 ## 6. Generics
 
@@ -371,7 +371,7 @@ for (String nome : nomes) {
 
 ### Streams: filter, map, collect
 
-Um **stream** descreve uma cadeia de transformações sobre uma coleção, sem alterá-la. O `->` define uma **lambda** (função anônima curta); `Cliente::getNome` é uma referência a método.
+Um **stream** descreve uma cadeia de transformações sobre uma coleção, sem alterá-la. O `->` define uma **lambda** (função anônima curta); `Cliente::getNome` é uma referência a método. Os dois são explicados na seção 8.
 
 ```java
 List<Cliente> clientes = List.of(
@@ -396,7 +396,182 @@ Map<String, Cliente> porNome = clientes.stream()
 
 (Este trecho precisa de `import java.util.stream.Collectors;`.)
 
-## 8. Records e Lombok
+## 8. Membros funcionais: lambdas, referências a métodos e Optional
+
+Desde o Java 8, um **comportamento** pode ser guardado em variável e passado como argumento, do mesmo jeito que um número ou uma `String`. Três peças fazem isso funcionar: **interfaces funcionais** (o tipo), **lambdas** e **referências a métodos** (o valor). O `Optional` e os streams são construídos em cima delas.
+
+Os trechos desta seção precisam de `import java.util.function.*;`.
+
+### Interfaces funcionais
+
+Uma **interface funcional** tem exatamente **um método abstrato**. Qualquer lambda compatível com esse método pode ser atribuída a ela. O pacote `java.util.function` já traz as mais usadas:
+
+| Interface | Método | Recebe → devolve | Onde aparece |
+|---|---|---|---|
+| `Function<T, R>` | `apply` | `T` → `R` | `Optional.map`, `stream().map` |
+| `Predicate<T>` | `test` | `T` → `boolean` | `Optional.filter`, `stream().filter`, `removeIf` |
+| `Consumer<T>` | `accept` | `T` → nada | `Optional.ifPresent`, `forEach` |
+| `Supplier<T>` | `get` | nada → `T` | `Optional.orElseGet`, `orElseThrow` |
+| `BiFunction<T, U, R>` | `apply` | `T`, `U` → `R` | `Map.merge`, `Map.compute` |
+| `UnaryOperator<T>` | `apply` | `T` → `T` | `List.replaceAll` |
+| `Runnable` | `run` | nada → nada | `Optional.ifPresentOrElse`, threads |
+
+```java
+Function<String, Integer> tamanho = texto -> texto.length();
+Predicate<String> emBranco = texto -> texto.isBlank();
+Consumer<String> imprimir = texto -> System.out.println(texto);
+Supplier<LocalDate> hoje = () -> LocalDate.now();
+
+System.out.println(tamanho.apply("Ana"));   // 3
+System.out.println(emBranco.test("  "));     // true
+imprimir.accept("Olá");                     // Olá
+```
+
+Você também pode declarar a sua. `@FunctionalInterface` é opcional, mas faz o compilador recusar um segundo método abstrato:
+
+```java
+@FunctionalInterface
+interface Desconto {
+    BigDecimal aplicar(BigDecimal valor);
+}
+
+Desconto dezPorCento = valor -> valor.multiply(new BigDecimal("0.90"));
+System.out.println(dezPorCento.aplicar(new BigDecimal("200.00")));   // 180.0000
+```
+
+### Sintaxe da lambda
+
+| Forma | Exemplo |
+|---|---|
+| Um parâmetro | `x -> x * 2` |
+| Vários parâmetros | `(a, b) -> a + b` |
+| Sem parâmetros | `() -> "padrão"` |
+| Com tipos explícitos | `(String a, String b) -> a.compareTo(b)` |
+| Com bloco | `x -> { int dobro = x * 2; return dobro + 1; }` |
+
+Na forma curta, o valor da expressão é o retorno. Com chaves, use `return`.
+
+Uma lambda pode **ler** variáveis locais de fora dela, desde que elas nunca mudem depois de atribuídas (*efetivamente finais*):
+
+```java
+int limite = 10;
+Predicate<Integer> acimaDoLimite = n -> n > limite;
+// limite = 20;   // não compila: a lambda usa limite, que precisa ser efetivamente final
+
+System.out.println(acimaDoLimite.test(15));   // true
+```
+
+### Referências a métodos
+
+Quando a lambda só repassa os parâmetros para um método que já existe, dá para escrever `Classe::metodo`:
+
+| Tipo | Referência | Lambda equivalente |
+|---|---|---|
+| Método estático | `Integer::parseInt` | `texto -> Integer.parseInt(texto)` |
+| Método de um objeto específico | `System.out::println` | `x -> System.out.println(x)` |
+| Método do próprio parâmetro | `Cliente::getNome` | `cliente -> cliente.getNome()` |
+| Construtor | `ArrayList::new` | `() -> new ArrayList<>()` |
+
+Nos controllers dos projetos, `.map(ResponseEntity::ok)` é o mesmo que `.map(livro -> ResponseEntity.ok(livro))`.
+
+### Optional em detalhe
+
+Três formas de criar:
+
+- `Optional.of(valor)`: o valor **não pode** ser `null` (lança `NullPointerException`).
+- `Optional.ofNullable(valor)`: vazio se o valor for `null`.
+- `Optional.empty()`: vazio.
+
+| Método | O que faz |
+|---|---|
+| `isPresent()` / `isEmpty()` | Diz se há valor. |
+| `orElse(padrao)` | Devolve o valor ou o padrão. |
+| `orElseGet(() -> ...)` | Igual, mas só calcula o padrão se estiver vazio. |
+| `orElseThrow()` | Devolve o valor ou lança `NoSuchElementException`. |
+| `orElseThrow(() -> new X())` | Devolve o valor ou lança a exceção indicada. |
+| `map(f)` | Transforma o valor; se `f` devolver `null`, o resultado fica vazio. |
+| `flatMap(f)` | Como `map`, para `f` que já devolve `Optional`. |
+| `filter(condicao)` | Mantém o valor só se a condição for verdadeira. |
+| `ifPresent(acao)` | Executa a ação se houver valor. |
+| `ifPresentOrElse(acao, senao)` | Executa uma das duas. |
+| `or(() -> outroOptional)` | Usa outro `Optional` quando este está vazio. |
+| `get()` | Devolve o valor ou lança exceção. Prefira `orElseThrow()`, que deixa a intenção explícita. |
+
+Usando o `Cliente` da seção 2:
+
+```java
+Map<Long, Cliente> clientes = Map.of(1L, new Cliente("Ana", "ana@exemplo.com"));
+
+Optional<Cliente> achado = Optional.ofNullable(clientes.get(1L));
+Optional<Cliente> ausente = Optional.ofNullable(clientes.get(99L));
+
+String email = achado.map(Cliente::getEmail).orElse("sem e-mail");
+String nome = ausente.map(Cliente::getNome).orElse("desconhecido");
+
+System.out.println(email);   // ana@exemplo.com
+System.out.println(nome);    // desconhecido
+
+achado.filter(c -> c.getEmail().endsWith("@exemplo.com"))
+        .ifPresent(c -> System.out.println("Domínio da empresa: " + c.getNome()));
+
+ausente.ifPresentOrElse(
+        c -> System.out.println("Achou " + c.getNome()),
+        () -> System.out.println("Não achou"));
+```
+
+Saída das duas últimas instruções: `Domínio da empresa: Ana` e `Não achou`.
+
+**`orElse` x `orElseGet`.** O argumento de `orElse` é sempre avaliado, mesmo quando há valor. Se o padrão for caro (uma consulta, um objeto grande), use `orElseGet`:
+
+```java
+Supplier<String> padraoCaro = () -> {
+    System.out.println("calculando padrão...");
+    return "padrão";
+};
+
+Optional<String> cheio = Optional.of("valor");
+cheio.orElse(padraoCaro.get());   // imprime "calculando padrão..." sem necessidade
+cheio.orElseGet(padraoCaro);      // não imprime nada
+```
+
+**`map` x `flatMap`.** Se a função já devolve um `Optional`, `map` cria uma caixa dentro de outra; `flatMap` evita isso:
+
+```java
+Function<String, Optional<String>> dominio = texto -> {
+    int arroba = texto.indexOf('@');
+    return arroba < 0 ? Optional.empty() : Optional.of(texto.substring(arroba + 1));
+};
+
+Optional<Optional<String>> aninhado = achado.map(Cliente::getEmail).map(dominio);
+Optional<String> plano = achado.map(Cliente::getEmail).flatMap(dominio);
+
+System.out.println(plano);   // Optional[exemplo.com]
+```
+
+### Optional nos projetos
+
+O `findById` do repository devolve `Optional<T>`. Os controllers transformam essa caixa direto em resposta HTTP:
+
+```java
+return repository.findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+```
+
+1. `findById(id)` devolve `Optional<Livro>`: cheio se o registro existe, vazio se não.
+2. `map(ResponseEntity::ok)` troca o `Livro` por um `ResponseEntity<Livro>` com status `200`. Com a caixa vazia, nada acontece.
+3. `orElse(...)` entrega o `404` quando a caixa está vazia.
+
+Nos projetos com service, o `atualizar` devolve `Optional.empty()` quando o `id` não existe e `Optional.of(salvo)` quando existe; o controller aplica o mesmo `map`/`orElse`.
+
+Boas práticas:
+
+- Use `Optional` como **retorno**. Como campo de entidade, o JPA não sabe mapeá-lo; como parâmetro, ele só complica a chamada.
+- Nunca devolva `null` em um método cujo tipo é `Optional`; devolva `Optional.empty()`.
+- Para coleções, devolva uma **lista vazia** em vez de `Optional<List<T>>`.
+- Para primitivos, existem `OptionalInt`, `OptionalLong` e `OptionalDouble`, que evitam o boxing.
+
+## 9. Records e Lombok
 
 Os dois existem para evitar o código repetitivo de campos, construtores, getters, `equals`, `hashCode` e `toString`.
 
@@ -491,7 +666,7 @@ public class Cliente {
 
 `@Data` é conveniente para classes simples, mas em **entidades** prefira `@Getter @Setter`: o `equals`, `hashCode` e `toString` gerados incluem todos os campos, inclusive relacionamentos, o que pode causar recursão infinita (`StackOverflowError`) e carregamentos inesperados do banco.
 
-## 9. Anotações
+## 10. Anotações
 
 Uma **anotação** é um metadado: uma etiqueta colocada em classe, campo, método ou parâmetro. Sozinha, ela **não executa nada**; quem a lê é outra ferramenta.
 
@@ -519,7 +694,7 @@ public class Cliente {
 
 Leitura do exemplo: "esta classe é uma tabela (`@Entity`), este campo é a chave primária (`@Id`) gerada pelo banco, esta coluna é obrigatória e tem até 120 caracteres". O framework varre as classes, lê essas etiquetas e monta SQL e mapeamento. Por isso Spring e JPA usam tantas anotações: configuram o comportamento **sem você escrever o código que o liga**.
 
-## 10. Exceções
+## 11. Exceções
 
 Uma exceção interrompe o fluxo normal quando algo dá errado e sobe pela pilha de chamadas até alguém tratá-la.
 
@@ -568,7 +743,7 @@ Cliente achado = clientes.stream()
 
 Uma exceção que ninguém trata derruba a requisição com erro 500; por isso lance exceções com mensagens claras e trate-as num ponto central.
 
-## 11. Erros comuns de iniciante
+## 12. Erros comuns de iniciante
 
 | Erro | Causa | Correção |
 |------|-------|----------|

@@ -1,17 +1,21 @@
 #Requires -Version 5.1
 <#
-  run.ps1 — compila e executa este projeto Spring Boot.
+  run.ps1 — compila este projeto Spring Boot em WAR e o executa em um Tomcat.
 
   Pré-requisitos na máquina: apenas um JDK 17+ (java + javac) e o SQL Server.
-  O Maven é baixado automaticamente na primeira execução para
-  %LOCALAPPDATA%\spring-crud-exemplos\ e reaproveitado por todos os projetos.
+  O Maven e o Tomcat são baixados automaticamente na primeira execução para
+  %LOCALAPPDATA%\spring-crud-exemplos\ e reaproveitados por todos os projetos.
+  Cada execução usa um Tomcat isolado em target\tomcat (CATALINA_BASE próprio),
+  então nada de outros projetos fica implantado junto.
 
   Uso:
-    .\run.ps1               compila e executa
-    .\run.ps1 -SoCompilar   apenas compila (gera target\app.jar)
-    .\run.ps1 -Limpar       apaga a pasta target antes de compilar
+    .\run.ps1                 compila e executa
+    .\run.ps1 -Porta 9090     usa outra porta HTTP (padrão 8080)
+    .\run.ps1 -SoCompilar     apenas compila (gera target\ROOT.war)
+    .\run.ps1 -Limpar         apaga a pasta target antes de compilar
 #>
 param(
+    [int] $Porta = 8080,
     [switch] $SoCompilar,
     [switch] $Limpar
 )
@@ -27,8 +31,14 @@ $MavenUrls = @(
     "https://dlcdn.apache.org/maven/maven-3/$MavenVersao/binaries/apache-maven-$MavenVersao-bin.zip",
     "https://archive.apache.org/dist/maven/maven-3/$MavenVersao/binaries/apache-maven-$MavenVersao-bin.zip"
 )
+$TomcatVersao = "10.1.61"
+$TomcatUrls = @(
+    "https://dlcdn.apache.org/tomcat/tomcat-10/v$TomcatVersao/bin/apache-tomcat-$TomcatVersao-windows-x64.zip",
+    "https://archive.apache.org/dist/tomcat/tomcat-10/v$TomcatVersao/bin/apache-tomcat-$TomcatVersao-windows-x64.zip"
+)
 $PastaCache = Join-Path $env:LOCALAPPDATA "spring-crud-exemplos"
 $PastaMaven = Join-Path $PastaCache "apache-maven-$MavenVersao"
+$PastaTomcat = Join-Path $PastaCache "apache-tomcat-$TomcatVersao"
 $Projeto = $PSScriptRoot
 
 function Titulo($texto) { Write-Host "`n== $texto" -ForegroundColor Cyan }
@@ -82,19 +92,17 @@ if (-not (Test-Path (Join-Path $javaHome "bin\javac.exe"))) {
 $env:JAVA_HOME = $javaHome
 Ok "Java $versaoJava (JDK) em $javaHome"
 
-# ---------------------------------------------------------------- Maven
+# ---------------------------------------------------------------- Maven e Tomcat
 
-Titulo "Verificando o Maven"
+function Instalar-Zip($nome, [string[]] $urls, $arquivoChave, $tamanho) {
+    if (Test-Path $arquivoChave) { return }
 
-$mvn = Join-Path $PastaMaven "bin\mvn.cmd"
-
-if (-not (Test-Path $mvn)) {
-    Aviso "Maven ainda não baixado. Baixando a versão $MavenVersao (cerca de 9 MB)..."
+    Aviso "$nome ainda não baixado (cerca de $tamanho). Baixando..."
     New-Item -ItemType Directory -Force -Path $PastaCache | Out-Null
-    $zip = Join-Path $PastaCache "apache-maven-$MavenVersao-bin.zip"
+    $zip = Join-Path $PastaCache ([IO.Path]::GetFileName($urls[0]))
     $baixou = $false
 
-    foreach ($url in $MavenUrls) {
+    foreach ($url in $urls) {
         try {
             Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -ErrorAction Stop
             $baixou = $true
@@ -105,10 +113,10 @@ if (-not (Test-Path $mvn)) {
     }
 
     if (-not $baixou) {
-        Falhar "Não foi possível baixar o Maven." @(
+        Falhar "Não foi possível baixar o $nome." @(
             "Verifique a conexão com a internet ou o proxy.",
-            "Alternativa manual: baixe $($MavenUrls[0]) e extraia em $PastaCache",
-            "(a pasta final deve ser $PastaMaven)."
+            "Alternativa manual: baixe $($urls[0]) e extraia em $PastaCache",
+            "(depois de extrair, o arquivo $arquivoChave precisa existir)."
         )
     }
 
@@ -116,7 +124,16 @@ if (-not (Test-Path $mvn)) {
     Remove-Item $zip -Force
 }
 
+Titulo "Verificando o Maven e o Tomcat"
+
+$mvn = Join-Path $PastaMaven "bin\mvn.cmd"
+$catalina = Join-Path $PastaTomcat "bin\catalina.bat"
+
+Instalar-Zip "Maven $MavenVersao" $MavenUrls $mvn "9 MB"
+Instalar-Zip "Tomcat $TomcatVersao" $TomcatUrls $catalina "16 MB"
+
 Ok "Maven $MavenVersao em $PastaMaven"
+Ok "Tomcat $TomcatVersao em $PastaTomcat"
 
 # ---------------------------------------------------------------- Compilação
 
@@ -186,34 +203,88 @@ if ($codigoMaven -ne 0) {
     Falhar "Compilação interrompida." $dicas
 }
 
-Ok "Compilado com sucesso: target\app.jar"
+Ok "Compilado com sucesso: target\ROOT.war"
 if ($SoCompilar) { exit 0 }
 
-# ---------------------------------------------------------------- Execução
+# ---------------------------------------------------------------- Implantação no Tomcat
 
-Titulo "Executando a aplicação"
+Titulo "Implantando no Tomcat"
 
-$porta = 8080
-$conteudoProps = Get-Content "src\main\resources\application.properties" -Raw
-$m = [regex]::Match($conteudoProps, "(?m)^server\.port\s*=\s*(\d+)")
-if ($m.Success) { $porta = [int]$m.Groups[1].Value }
-
-$ocupada = Get-NetTCPConnection -LocalPort $porta -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
+$ocupada = Get-NetTCPConnection -LocalPort $Porta -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
 if ($ocupada) {
     $processo = Get-Process -Id $ocupada.OwningProcess -ErrorAction SilentlyContinue
-    Falhar "A porta $porta já está em uso (processo: $($processo.ProcessName), PID $($ocupada.OwningProcess))." @(
+    Falhar "A porta $Porta já está em uso (processo: $($processo.ProcessName), PID $($ocupada.OwningProcess))." @(
         "Feche a outra aplicação (provavelmente outro projeto rodando) ou",
-        "altere server.port em src\main\resources\application.properties."
+        "use outra porta: .\run.ps1 -Porta 9090"
     )
 }
 
-Write-Host "   Acesse http://localhost:$porta/  (Ctrl+C para parar)" -ForegroundColor Green
-Write-Host ""
+# CATALINA_BASE próprio: conf copiada do Tomcat instalado, webapps/logs/temp/work só deste projeto.
+$base = Join-Path $Projeto "target\tomcat"
+if (Test-Path $base) { Remove-Item $base -Recurse -Force }
+foreach ($pasta in "logs", "temp", "webapps", "work") {
+    New-Item -ItemType Directory -Force -Path (Join-Path $base $pasta) | Out-Null
+}
+Copy-Item (Join-Path $PastaTomcat "conf") (Join-Path $base "conf") -Recurse
+Copy-Item "target\ROOT.war" (Join-Path $base "webapps\ROOT.war")
 
-$saidaApp = & $java.Source -jar "target\app.jar" 2>&1 | ForEach-Object { "$_"; Write-Host $_ }
-$codigoApp = $LASTEXITCODE
+# Porta HTTP configurável e porta de shutdown (8005) desligada, para não colidir com outro Tomcat.
+$serverXml = Join-Path $base "conf\server.xml"
+$xml = [IO.File]::ReadAllText($serverXml)
+$xml = $xml.Replace('<Connector port="8080"', "<Connector port=""$Porta""").Replace('<Server port="8005"', '<Server port="-1"')
+[IO.File]::WriteAllText($serverXml, $xml, (New-Object System.Text.UTF8Encoding($false)))
 
-if ($codigoApp -eq 0 -or $codigoApp -eq -1073741510 -or $codigoApp -eq 130) { exit 0 }
+$env:CATALINA_HOME = $PastaTomcat
+$env:CATALINA_BASE = $base
+$env:JAVA_OPTS = "-Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
+
+# Saída do Tomcat vai para um arquivo que lemos em tempo real: com o Tomcat externo o processo
+# continua vivo mesmo quando a aplicação Spring falha ao subir, então o erro precisa ser detectado no log.
+$arquivoSaida = Join-Path $base "logs\console.log"
+$comando = "/c `"`"$catalina`" run > `"$arquivoSaida`" 2>&1`""
+$tomcat = Start-Process -FilePath "cmd.exe" -ArgumentList $comando -NoNewWindow -PassThru
+
+for ($i = 0; $i -lt 50 -and -not (Test-Path $arquivoSaida); $i++) { Start-Sleep -Milliseconds 100 }
+$fluxo = New-Object IO.FileStream($arquivoSaida, [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::Read, [IO.FileShare]::ReadWrite)
+$leitor = New-Object IO.StreamReader($fluxo, [System.Text.Encoding]::UTF8)
+
+$saidaApp = New-Object System.Collections.Generic.List[string]
+$falhou = $false
+$iniciou = $false
+
+try {
+    while ($true) {
+        $linha = $leitor.ReadLine()
+
+        if ($null -eq $linha) {
+            if ($tomcat.HasExited) { break }
+            Start-Sleep -Milliseconds 200
+            continue
+        }
+
+        $saidaApp.Add($linha)
+        Write-Host $linha
+
+        if ($linha -match "startup failed due to previous errors|Application run failed|Failed to start component|Failed to initialize component|Protocol handler start failed") {
+            $falhou = $true
+        }
+
+        if ($linha -match "Server startup in \[") {
+            if ($falhou) { break }
+            $iniciou = $true
+            Write-Host ""
+            Write-Host "   Acesse http://localhost:$Porta/  (Ctrl+C para parar)" -ForegroundColor Green
+            Write-Host ""
+        }
+    }
+} finally {
+    if (-not $tomcat.HasExited) { & taskkill /T /F /PID $tomcat.Id 2>&1 | Out-Null }
+    $leitor.Dispose()
+}
+
+if ($iniciou -and -not $falhou) { exit 0 }
+
+# ---------------------------------------------------------------- Diagnóstico
 
 $texto = $saidaApp -join "`n"
 $dicas = @()
@@ -230,11 +301,14 @@ if ($texto -match "Login failed for user") {
 if ($texto -match "Cannot open database") {
     $dicas += "O banco 'projeto' não existe. Rode o setup-sqlserver.ps1 para criá-lo."
 }
-if ($texto -match "PKIX path building failed|SSL|certificate") {
+if ($texto -match "PKIX path building failed|\(SSL\) encryption|SSLHandshakeException|unable to find valid certification") {
     $dicas += "Problema de certificado. A URL do datasource precisa de ;encrypt=true;trustServerCertificate=true"
 }
-if ($texto -match "Port \d+ was already in use|Address already in use") {
-    $dicas += "A porta $porta já está em uso. Pare a outra aplicação ou altere server.port."
+if ($texto -match "Address already in use|BindException") {
+    $dicas += "A porta $Porta já está em uso. Pare a outra aplicação ou use .\run.ps1 -Porta 9090"
+}
+if ($texto -match "Database may be already in use|The file is locked") {
+    $dicas += "O arquivo do banco H2 em data\ está aberto por outro processo (outro Tomcat deste projeto ou um cliente SQL). Feche-o e rode novamente."
 }
 if ($texto -match "FOREIGN KEY constraint|DataIntegrityViolationException") {
     $dicas += "Conflito de chave estrangeira: provavelmente sobrou tabela de outro projeto no banco. Rode o setup-sqlserver.ps1 para zerar o banco."
@@ -245,11 +319,15 @@ if ($texto -match "Invalid object name|Incorrect syntax") {
 if ($texto -match "UnsatisfiedDependencyException|NoSuchBeanDefinitionException") {
     $dicas += "O Spring não conseguiu montar um componente (@Service/@Repository/@RestController). Confira se as classes estão dentro de um subpacote de com.exemplo."
 }
+if ($texto -match "UnsupportedClassVersionError|NoClassDefFoundError: jakarta") {
+    $dicas += "Incompatibilidade de versões: este projeto exige Tomcat 10.1+ (Jakarta EE 10) e JDK 17+."
+}
 if (-not $dicas) {
     $dicas += "Procure acima a primeira linha com 'Caused by:' — ela costuma indicar a causa raiz."
+    $dicas += "Log completo do Tomcat em target\tomcat\logs\"
 }
 
 $causa = $saidaApp | Where-Object { $_ -match "Caused by:" } | Select-Object -Last 1
 if ($causa) { $dicas += "Causa raiz reportada: $($causa.Trim())" }
 
-Falhar "A aplicação encerrou com erro (código $codigoApp)." $dicas
+Falhar "A aplicação não conseguiu iniciar no Tomcat." $dicas

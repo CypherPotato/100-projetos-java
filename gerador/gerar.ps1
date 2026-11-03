@@ -1,6 +1,6 @@
 ﻿#Requires -Version 5.1
 <#
-  gerar.ps1 — gera os 100 projetos em ..\projetos a partir de spec.json.
+  gerar.ps1 — gera os projetos em ..\projetos a partir de spec.json.
 
   Uso:
     .\gerar.ps1            gera tudo e atualiza o README raiz
@@ -39,6 +39,15 @@ $ReservadasSql = ("user order group plan key file index table view function proc
     "rule check column database default open close read write print exit return select from where end option set update delete " +
     "insert into values by to on off in is of or and not null top with over percent status level text image date time year month day") -split " "
 
+$ReservadasH2 = ("all and any array as asymmetric authorization between both case cast check constraint cross current_catalog " +
+    "current_date current_path current_role current_schema current_time current_timestamp current_user day default distinct else " +
+    "end except exists false fetch for foreign from full group groups having hour if ilike in inner intersect interval is join key " +
+    "leading left like limit localtime localtimestamp minus minute month natural not null offset on or order over partition primary " +
+    "qualify range regexp right row rownum rows second select session_user set some symmetric system_user table to top trailing " +
+    "true uescape union unique unknown user using value values when where window with year") -split " "
+
+$Bancos = @("sqlserver", "h2")
+
 # ---------- utilidades ----------
 
 function LowerFirst($s) { $s.Substring(0, 1).ToLower() + $s.Substring(1) }
@@ -47,6 +56,7 @@ function Rota($tabela) { $tabela -replace "_", "-" }
 function Snake($campo) { [regex]::Replace($campo, "([A-Z])", '_$1').ToLower() }
 function Pacote($slug) { $slug -replace "-", "" }
 function NumeroFormatado($n) { "{0:000}" -f $n }
+function Banco($p) { if ($p.banco) { $p.banco } else { "sqlserver" } }
 # A vírgula impede o PowerShell de desembrulhar um array de 1 elemento (senão .Count vira lookup de propriedade).
 function Relacoes($e) { if ($e.relacoes) { , [array] $e.relacoes } else { , @() } }
 
@@ -58,7 +68,10 @@ function Escrever($arquivo, $conteudo) {
 function ValidarProjeto($p, $slugs, $numeros) {
     function Erro($m) { throw "Projeto $($p.numero) ($($p.slug)): $m" }
 
-    if ($p.numero -lt 1 -or $p.numero -gt 100) { Erro "numero inválido" }
+    if ($p.numero -lt 1 -or $p.numero -gt 999) { Erro "numero inválido" }
+    if ($Bancos -notcontains (Banco $p)) { Erro "banco inválido: $($p.banco)" }
+    $reservadas = $ReservadasSql
+    if ((Banco $p) -eq "h2") { $reservadas += $ReservadasH2 }
     if ($numeros.Contains($p.numero)) { Erro "numero repetido" }
     [void] $numeros.Add($p.numero)
     if ($p.slug -notmatch "^[a-z0-9-]+$") { Erro "slug inválido" }
@@ -75,14 +88,16 @@ function ValidarProjeto($p, $slugs, $numeros) {
         if ($e.nome -cnotmatch "^[A-Z][A-Za-z0-9]*$") { Erro "entidade com nome inválido: $($e.nome)" }
         if ($declaradas.Contains($e.nome)) { Erro "entidade repetida: $($e.nome)" }
         if ($e.tabela -cnotmatch "^[a-z][a-z0-9_]*$") { Erro "tabela inválida: $($e.tabela)" }
-        if ($ReservadasSql -contains $e.tabela) { Erro "tabela reservada: $($e.tabela)" }
+        if ($reservadas -contains $e.tabela) { Erro "tabela reservada: $($e.tabela)" }
         if (@($e.campos).Count -lt 2 -or @($e.campos).Count -gt 5) { Erro "$($e.nome): 2 a 5 campos" }
 
         $nomesCampos = New-Object System.Collections.Generic.HashSet[string]
         $checarNome = {
             param($nome)
             if ($nome -cnotmatch "^[a-z][A-Za-z0-9]*$") { Erro "$($e.nome): campo inválido $nome" }
-            if ($ReservadasJava -ccontains $nome -or $ReservadasSql -contains $nome.ToLower()) { Erro "$($e.nome): campo reservado $nome" }
+            if ($ReservadasJava -ccontains $nome -or $reservadas -contains $nome.ToLower() -or $reservadas -contains (Snake $nome)) {
+                Erro "$($e.nome): campo reservado $nome"
+            }
             if ($nomesCampos.Contains($nome)) { Erro "$($e.nome): campo repetido $nome" }
             [void] $nomesCampos.Add($nome)
         }
@@ -107,6 +122,11 @@ function ValidarProjeto($p, $slugs, $numeros) {
 # ---------- geradores de código Java ----------
 
 function GerarPom($p) {
+    $driver = if ((Banco $p) -eq "h2") {
+        @("com.h2database", "h2")
+    } else {
+        @("com.microsoft.sqlserver", "mssql-jdbc")
+    }
     $lombok = ""
     $excludeLombok = ""
     $compilerLombok = ""
@@ -165,6 +185,7 @@ function GerarPom($p) {
     <groupId>com.exemplo</groupId>
     <artifactId>$($p.slug)</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
     <name>$($p.nome)</name>
     <description>$($p.descricao)</description>
 
@@ -179,17 +200,22 @@ function GerarPom($p) {
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
+            <groupId>$($driver[0])</groupId>
+            <artifactId>$($driver[1])</artifactId>
             <scope>runtime</scope>
         </dependency>$lombok
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>ROOT</finalName>
         <plugins>$compilerLombok
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -203,14 +229,29 @@ function GerarPom($p) {
 }
 
 function GerarProperties($p) {
-    @"
-spring.application.name=$($p.slug)
-server.port=8080
+    $conexao = if ((Banco $p) -eq "h2") {
+        @"
+# H2 em arquivo: os dados ficam em data\$($p.slug).mv.db, relativo à pasta de onde o Tomcat é iniciado
+spring.datasource.url=jdbc:h2:file:./data/$($p.slug)
+spring.datasource.username=sa
+spring.datasource.password=
 
+# Console web do H2 em /h2-console (use a mesma URL, usuário e senha acima)
+spring.h2.console.enabled=true
+"@
+    } else {
+        @"
 # Conexão com o SQL Server (valores criados pelo setup-sqlserver.ps1)
 spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=projeto;encrypt=true;trustServerCertificate=true
 spring.datasource.username=projeto
 spring.datasource.password=Projeto@123
+"@
+    }
+
+    @"
+spring.application.name=$($p.slug)
+
+$conexao
 
 # O Hibernate cria/atualiza as tabelas automaticamente a partir das entidades
 spring.jpa.hibernate.ddl-auto=update
@@ -226,9 +267,16 @@ package com.exemplo.$(Pacote $p.slug);
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(Application.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -582,11 +630,23 @@ curl -X DELETE http://localhost:8080/$r/1
     $serviceTexto = if ($p.service) { "sim" } else { "não" }
     $estruturaService = if ($p.service) { "`n  service/      regras simples entre controller e repositório" } else { "" }
 
+    if ((Banco $p) -eq "h2") {
+        $bancoTexto = "H2 (arquivo)"
+        $passoBanco = "1. Não precisa instalar banco: o H2 vem como dependência e grava os dados em ``data\$($p.slug).mv.db`` nesta pasta. Para zerar, pare o projeto e apague a pasta ``data``."
+        $passoConsole = "`n4. Para ver as tabelas, abra http://localhost:8080/h2-console com JDBC URL ``jdbc:h2:file:./data/$($p.slug)``, usuário ``sa`` e senha vazia."
+        $estruturaDados = "`ndata/                    banco H2 (criado na primeira execução, ignorado pelo Git)"
+    } else {
+        $bancoTexto = "SQL Server"
+        $passoBanco = "1. Configure o SQL Server uma vez com ``..\..\setup-sqlserver.ps1`` (cria o banco ``projeto`` vazio)."
+        $passoConsole = ""
+        $estruturaDados = ""
+    }
+
     @"
 # $(NumeroFormatado $p.numero) · $($p.nome)
 
 **Categoria:** $($p.categoria)
-**Lombok:** $lombokTexto · **Camada Service:** $serviceTexto
+**Banco:** $bancoTexto · **Lombok:** $lombokTexto · **Camada Service:** $serviceTexto
 
 $($p.descricao)
 
@@ -602,9 +662,9 @@ $endpoints
 
 ## Como rodar
 
-1. Configure o SQL Server uma vez com ``..\..\setup-sqlserver.ps1`` (cria o banco ``projeto`` vazio).
-2. Execute ``run.bat`` nesta pasta. Na primeira vez ele baixa o Maven e as dependências.
-3. Acesse http://localhost:8080/$rotaPrimeira
+$passoBanco
+2. Execute ``run.bat`` nesta pasta. Na primeira vez ele baixa o Maven, o Tomcat e as dependências, gera o ``ROOT.war`` e o implanta em um Tomcat isolado em ``target\tomcat``. Para outra porta: ``.\run.ps1 -Porta 9090``.
+3. Acesse http://localhost:8080/$rotaPrimeira$passoConsole
 
 Ordem sugerida para cadastrar (as relações precisam do registro "pai" criado antes): $ordem.
 
@@ -630,7 +690,7 @@ src/main/java/com/exemplo/$(Pacote $p.slug)/
   model/        entidades JPA
   repository/   interfaces JpaRepository$estruturaService
   controller/   endpoints REST
-src/main/resources/application.properties
+src/main/resources/application.properties$estruturaDados
 ``````
 
 "@
@@ -648,22 +708,25 @@ function GerarReadmeRaiz($projetos) {
             $pasta = "$(NumeroFormatado $_.numero)-$($_.slug)"
             $lombok = if ($_.lombok) { "✔" } else { "" }
             $service = if ($_.service) { "✔" } else { "" }
-            "| $(NumeroFormatado $_.numero) | [$($_.nome)](projetos/$pasta/) | $($_.descricao) | $entidades | $lombok | $service |"
+            $banco = if ((Banco $_) -eq "h2") { "H2" } else { "SQL Server" }
+            "| $(NumeroFormatado $_.numero) | [$($_.nome)](projetos/$pasta/) | $($_.descricao) | $entidades | $banco | $lombok | $service |"
         }) -join "`n"
 
         @"
 ### $c ($($doGrupo.Count))
 
-| # | Projeto | Descrição | Entidades | Lombok | Service |
-|---|---|---|---|---|---|
+| # | Projeto | Descrição | Entidades | Banco | Lombok | Service |
+|---|---|---|---|---|---|---|
 $linhas
 "@
     }
 
     $totalLombok = @($projetos | Where-Object { $_.lombok }).Count
     $totalService = @($projetos | Where-Object { $_.service }).Count
+    $totalH2 = @($projetos | Where-Object { (Banco $_) -eq "h2" }).Count
     $intro = [IO.File]::ReadAllText((Join-Path $PastaTemplates "README-intro.md"), $Utf8SemBom)
     $intro = $intro.Replace("{{TOTAL}}", "$($projetos.Count)").Replace("{{LOMBOK}}", "$totalLombok").Replace("{{SERVICE}}", "$totalService").Replace("{{SPRING_BOOT}}", $SpringBoot)
+    $intro = $intro.Replace("{{SQLSERVER}}", "$($projetos.Count - $totalH2)").Replace("{{H2}}", "$totalH2")
 
     "$intro`n## Catálogo dos projetos`n`n$($secoes -join "`n`n")`n"
 }
@@ -678,7 +741,8 @@ function GerarProjeto($p) {
 
     Escrever (Join-Path $pasta "pom.xml") (GerarPom $p)
     Escrever (Join-Path $pasta "README.md") (GerarReadmeProjeto $p)
-    Escrever (Join-Path $pasta ".gitignore") "target/`n*.log`n"
+    $ignorados = if ((Banco $p) -eq "h2") { "target/`ndata/`n*.log`n" } else { "target/`n*.log`n" }
+    Escrever (Join-Path $pasta ".gitignore") $ignorados
     Escrever (Join-Path $pasta "src\main\resources\application.properties") (GerarProperties $p)
     Escrever (Join-Path $java "Application.java") (GerarApplication $p)
 

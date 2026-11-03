@@ -5,13 +5,14 @@ O arquivo `spec.json` contém um array JSON de projetos, lido por `gerar.ps1`.
 ```jsonc
 [
   {
-    numero: 1,                       // inteiro único, 1..100 (define a ordem e o prefixo da pasta)
+    numero: 1,                       // inteiro único, 1..999 (define a ordem e o prefixo da pasta)
     slug: "biblioteca",              // único, apenas [a-z0-9-], vira nome da pasta e do pacote (hífens removidos)
     nome: "Biblioteca",              // nome amigável (pode ter acentos)
     categoria: "Educação",           // uma das categorias da lista abaixo
     descricao: "Controle de autores e livros de uma biblioteca.", // uma frase, com acentos corretos
     lombok: true,                    // true em ~metade dos projetos
     service: false,                  // true em ~um terço dos projetos: gera camada Service entre Controller e Repository
+    banco: "h2",                     // opcional: "sqlserver" (padrão quando ausente) ou "h2" (H2 em arquivo, em data/<slug>)
     entidades: [
       {
         nome: "Autor",               // PascalCase ASCII, sem acento, singular
@@ -49,6 +50,7 @@ O arquivo `spec.json` contém um array JSON de projetos, lido por `gerar.ps1`.
 - Nomes de campo de relação (`relacoes[].campo`) seguem a mesma regra de `campos[].nome` e não podem colidir com nomes de campos.
 - `tabela` em snake_case plural ASCII; nomes de entidade únicos dentro do projeto. Evite nomes de tabela que são palavras reservadas do SQL Server (`user`, `order`, `group`, `plan`, `key`, `file`, `index`, `table`, `view`, `function`, `procedure`, `transaction`, `schema`, `public`, `role`, `rule`, `check`, `column`, `database`, `default`, `open`, `close`, `read`, `write`, `print`, `exit`, `return`, `select`, `from`, `where`, `end`, `option`, `set`, `update`, `delete`, `insert`, `into`, `values`, `by`, `to`, `on`, `off`, `in`, `is`, `of`, `or`, `and`, `not`, `null`, `top`, `with`, `over`, `percent`, `status`, `level`, `text`, `image`, `date`, `time`, `year`, `month`, `day`). Como as tabelas são plurais (`usuarios`, `pedidos`), isso raramente ocorre.
 - Nomes de campo também não devem ser palavras reservadas do SQL Server (listadas acima); ex.: use `situacao` em vez de `status`, `nivel` em vez de `level`, `texto` em vez de `text`, `data` é permitido.
+- Projetos com `banco: "h2"` também não podem usar palavras reservadas do H2 como tabela ou coluna (lista `$ReservadasH2` em `gerar.ps1`; ex.: `value`, `key`, `limit`, `minute`, `hour`, `row`, `rows`, `range`, `array`). O nome em snake_case da coluna também é conferido (`dataHora` → `data_hora`).
 - Mantenha tudo simples e didático: nada de herança, enums, embeddables ou coleções.
 
 ## Categorias válidas

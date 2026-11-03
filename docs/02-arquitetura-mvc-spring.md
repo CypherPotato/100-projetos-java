@@ -412,7 +412,7 @@ public ClienteService(ClienteRepository repository) {
 | Dá para criar o objeto em um teste sem o Spring | Difícil | Fácil (`new ClienteService(repoFalso)`) |
 | Precisa de `@Autowired` | Sim | Não, se houver um único construtor |
 
-Os exemplos deste guia usam construtor.
+Os exemplos deste guia usam construtor. O guia [04](04-requisicoes-respostas-e-injecao.md) detalha o container, os beans, `@Value`, `@Bean` e os erros de injeção.
 
 ## 7. Fluxo de uma requisição passo a passo
 
@@ -429,7 +429,7 @@ Content-Type: application/json
 }
 ```
 
-1. **HTTP chega ao Tomcat embutido.** O Spring Boot sobe um servidor na porta 8080 por padrão. O `DispatcherServlet` olha o verbo (`POST`) e a rota (`/pedidos`) e escolhe o método `PedidoController.criar`.
+1. **HTTP chega ao Tomcat.** Nos projetos deste repositório, o `run.ps1` implanta o `ROOT.war` em um Tomcat externo (porta 8080 por padrão). O `DispatcherServlet` olha o verbo (`POST`) e a rota (`/pedidos`) e escolhe o método `PedidoController.criar`.
 2. **Controller: desserialização.** Por causa do `@RequestBody`, o Jackson converte o JSON em um objeto `Pedido`. O campo `cliente` vira um `Cliente` com **apenas o `id` preenchido** (`nome` e `email` ficam `null`).
 3. **Controller: preparação.** `pedido.setId(null)` garante que será um `INSERT`. Se houvesse um service, a regra de negócio rodaria neste ponto.
 4. **Repository: `save(pedido)`.** Como o `id` é `null`, o Spring Data decide que a entidade é nova e chama `persist`.
@@ -485,6 +485,8 @@ Partes da URL:
 - `trustServerCertificate=true`: aceita o certificado autoassinado do servidor local. Sem isso, a conexão costuma falhar com erro de certificado em ambiente de desenvolvimento. Em produção, use um certificado válido.
 
 Outros valores de `ddl-auto`: `none` (não mexe), `validate` (só confere), `create` (recria tudo e perde dados) e `create-drop`. `update` é cômodo para estudo; em produção, prefira migrações (Flyway ou Liquibase).
+
+O guia [05](05-configuracao-properties-sqlserver-tomcat.md) aprofunda o arquivo: propriedades de log, variáveis de ambiente, perfis, configuração do SQL Server e do Tomcat.
 
 ## 9. Como testar os endpoints
 
@@ -546,5 +548,5 @@ Os projetos são didáticos e deixam de fora alguns pontos que uma API real prec
 
 - **DTOs**: classes próprias para entrada e saída, em vez de expor a entidade. Evitam vazar campos internos e permitem que o POST receba só `clienteId`, em vez de `{ "cliente": { "id": 1 } }`.
 - **Validação com `@Valid`**: anotações como `@NotBlank`, `@Email` e `@Positive` nos campos, com `@Valid` no `@RequestBody`. Requer a dependência `spring-boot-starter-validation`.
-- **Tratamento de erros com `@ControllerAdvice`**: uma classe central que converte exceções em respostas JSON claras (por exemplo, `400` para dados inválidos e `409` para violação de chave estrangeira), em vez de `500` genérico.
+- **Tratamento de erros com `@ControllerAdvice`**: uma classe central que converte exceções em respostas JSON claras (por exemplo, `400` para dados inválidos e `409` para violação de chave estrangeira), em vez de `500` genérico. Exemplo testado no guia [04](04-requisicoes-respostas-e-injecao.md), seção 2.
 - **Paginação**: usar `Pageable` e `Page<T>` (`findAll(Pageable)`) para não devolver milhares de registros de uma vez, com parâmetros como `?page=0&size=20`.

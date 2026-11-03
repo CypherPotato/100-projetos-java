@@ -14,6 +14,7 @@
     <groupId>com.exemplo</groupId>
     <artifactId>clinica-veterinaria</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
     <name>Clínica Veterinária</name>
     <description>Controle de animais atendidos e suas vacinas aplicadas.</description>
 
@@ -25,6 +26,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,7 +49,7 @@
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

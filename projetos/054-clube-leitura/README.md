@@ -1,7 +1,7 @@
 # 054 · Clube de Leitura
 
 **Categoria:** Lazer e Cultura
-**Lombok:** não · **Camada Service:** não
+**Banco:** SQL Server · **Lombok:** não · **Camada Service:** não
 
 Acompanhamento dos livros lidos pelos membros de um clube de leitura.
 
@@ -61,7 +61,7 @@ Acompanhamento dos livros lidos pelos membros de um clube de leitura.
 ## Como rodar
 
 1. Configure o SQL Server uma vez com `..\..\setup-sqlserver.ps1` (cria o banco `projeto` vazio).
-2. Execute `run.bat` nesta pasta. Na primeira vez ele baixa o Maven e as dependências.
+2. Execute `run.bat` nesta pasta. Na primeira vez ele baixa o Maven, o Tomcat e as dependências, gera o `ROOT.war` e o implanta em um Tomcat isolado em `target\tomcat`. Para outra porta: `.\run.ps1 -Porta 9090`.
 3. Acesse http://localhost:8080/livros
 
 Ordem sugerida para cadastrar (as relações precisam do registro "pai" criado antes): Livro → Membro → Leitura.

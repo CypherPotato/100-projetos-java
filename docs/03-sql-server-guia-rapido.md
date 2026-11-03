@@ -477,6 +477,8 @@ Pegadinhas comuns:
 
 ## 11. Problemas comuns ao conectar com o Java
 
+O passo a passo do `setup-sqlserver.ps1`, a anatomia da URL JDBC e o pool de conexões estão no guia [05](05-configuracao-properties-sqlserver-tomcat.md), seção 2.
+
 URL JDBC que funciona neste ambiente (valores criados pelo `setup-sqlserver.ps1`; rodá-lo de novo resolve a maioria dos erros abaixo):
 
 ```properties

@@ -14,6 +14,7 @@
     <groupId>com.exemplo</groupId>
     <artifactId>cafeteria</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
     <name>Cafeteria</name>
     <description>Controle de fornecedores e lotes de grãos de café de uma cafeteria.</description>
 
@@ -28,6 +29,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
@@ -38,7 +44,7 @@
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
